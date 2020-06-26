@@ -43,7 +43,7 @@ def rename(path):
 		if not_hidden_file(item) and not item == 'lost+found':
 			print(item)
 			new_name = input('please rename: ')
-			subprocess.run('mv', item, new_name)
+			subprocess.run(['mv', item, new_name])
 		continue
 
 time.sleep(1)
