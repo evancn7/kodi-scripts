@@ -42,8 +42,10 @@ def rename(path):
 	for item in os.listdir():
 		if not_hidden_file(item) and not item == 'lost+found':
 			print(item)
-			new_name = input('please rename: ')
-			subprocess.run(['mv', item, new_name])
+			movie_title = input('Movie Title: ')
+			movie_year = input('Movie Year: ')
+			substitute = f'{movie_title} ({movie_year}).mp4'
+			subprocess.run(['mv', item, substitute])
 		continue
 
 time.sleep(1)
