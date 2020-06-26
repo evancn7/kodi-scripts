@@ -4,6 +4,7 @@ import os
 import re
 import sys
 import time
+import subprocess
 
 path = sys.argv[1]
 
@@ -37,5 +38,15 @@ def not_hidden_file(item):
 	return True
 
 
-time.sleep(10)
+def rename(path):
+	for item in os.listdir():
+		if not_hidden_file(item) and not item == 'lost+found':
+			print(item)
+			new_name = input('please rename: ')
+			subprocess.run('mv', item, new_name)
+		continue
+
+time.sleep(1)
 main(path)
+time.sleep(1)
+rename(path)
