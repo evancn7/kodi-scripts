@@ -10,7 +10,7 @@ path = sys.argv[1]
 
 def locate_and_clean(path):
 	for item in os.listdir(path):
-		if os.path.isdir(os.path.join(path, item)) and not_hidden_file(item):
+		if os.path.isdir(os.path.join(path, item)) and not_hidden_file(item) and not item == 'lost+found':
 			os.chdir(os.path.join(path, item))
 			dir_path = os.getcwd()
 			clean_dir(dir_path)
@@ -35,6 +35,7 @@ def not_hidden_file(item):
 	if query != None:
 		return False
 	return True
+
 
 time.sleep(10)
 locate_and_clean(path)
