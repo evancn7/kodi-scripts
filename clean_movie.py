@@ -9,19 +9,6 @@ import subprocess
 path = sys.argv[1]
 
 
-def main(path):
-	for item in os.listdir(path):
-		if os.path.isdir(os.path.join(path, item)) and not_hidden_file(item):
-			os.chdir(os.path.join(path, item))
-			dir_path = os.getcwd()
-			clean_dir(dir_path)
-			os.chdir(path)
-			os.rmdir(dir_path)
-			rename(path)
-		else:
-			continue
-
-
 def clean_dir(dir_path):
 	for file in os.listdir(dir_path):
 		query = re.search(r'\.mp4', file)
@@ -46,7 +33,7 @@ def format_check(path):
 	for movie in os.listdir(path):
 		result = re.search(pattern, movie)
 		if result == None:
-			incorrect_formats.append(result)
+			incorrect_formats.append(movie)
 	return incorrect_formats
 
 
@@ -58,5 +45,20 @@ def rename(path):
 		substitute = f'{movie_title} ({movie_year}).mp4'
 		subprocess.run(['mv', item, substitute])
 
-time.sleep(1)
+
+def main(path):
+	for item in os.listdir(path):
+		if os.path.isdir(os.path.join(path, item)) and not_hidden_file(item):
+			os.chdir(os.path.join(path, item))
+			dir_path = os.getcwd()
+			clean_dir(dir_path)
+			os.chdir(path)
+			os.rmdir(dir_path)
+		else:
+			continue
+	os.chdir(path)
+	rename(path)
+
+
+time.sleep(2)
 main(path)
