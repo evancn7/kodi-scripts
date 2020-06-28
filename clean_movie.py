@@ -11,12 +11,13 @@ path = sys.argv[1]
 
 def main(path):
 	for item in os.listdir(path):
-		if os.path.isdir(os.path.join(path, item)) and not_hidden_file(item) and not item == 'lost+found':
+		if os.path.isdir(os.path.join(path, item)) and not_hidden_file(item):
 			os.chdir(os.path.join(path, item))
 			dir_path = os.getcwd()
 			clean_dir(dir_path)
 			os.chdir(path)
 			os.rmdir(dir_path)
+			rename(path)
 		else:
 			continue
 
@@ -32,23 +33,30 @@ def clean_dir(dir_path):
 
 
 def not_hidden_file(item):
+	print(item)
 	query = re.search(r'^\..*', item)
 	if query != None:
 		return False
 	return True
 
 
+def format_check(path):
+	incorrect_formats = []
+	pattern = r'[\w ]*\([\d]*\).mp4'
+	for movie in os.listdir(path):
+		result = re.search(pattern, movie)
+		if result == None:
+			incorrect_formats.append(result)
+	return incorrect_formats
+
+
 def rename(path):
-	for item in os.listdir():
-		if not_hidden_file(item) and not item == 'lost+found':
-			print(item)
-			movie_title = input('Movie Title: ')
-			movie_year = input('Movie Year: ')
-			substitute = f'{movie_title} ({movie_year}).mp4'
-			subprocess.run(['mv', item, substitute])
-		continue
+	for item in format_check(path):
+		print(item)
+		movie_title = input('Movie Title: ')
+		movie_year = input('Movie Year: ')
+		substitute = f'{movie_title} ({movie_year}).mp4'
+		subprocess.run(['mv', item, substitute])
 
 time.sleep(1)
 main(path)
-time.sleep(1)
-rename(path)
