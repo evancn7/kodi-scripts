@@ -28,6 +28,7 @@ def not_hidden_file(item):
 
 
 def format_check(path):
+	"""function to check if the title is already in the correct format i.e. movie title (2020)"""
 	incorrect_formats = []
 	pattern = r'[\w ]*\([\d]*\).mp4'
 	for movie in os.listdir(path):
