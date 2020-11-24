@@ -5,6 +5,7 @@ import re
 import sys
 import time
 import subprocess
+import shutil
 
 path = sys.argv[1]
 
@@ -15,6 +16,8 @@ def clean_dir(dir_path):
 		query2 = re.search(r'\.mkv', file)
 		if query != None or query2 != None:
 			os.rename(os.path.join(dir_path, file), os.path.join(path, file))
+		elif os.path.isdir(os.path.join(dir_path, file)):
+			shutil.rmtree(file)
 		else:
 			os.remove(file)
 
