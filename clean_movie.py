@@ -14,7 +14,8 @@ def clean_dir(dir_path):
 	for file in os.listdir(dir_path):
 		query = re.search(r'\.mp4', file)
 		query2 = re.search(r'\.mkv', file)
-		if query != None or query2 != None:
+		query3 = re.search(r'\.avi', file)
+		if query != None or query2 != None or query3 != None:
 			os.rename(os.path.join(dir_path, file), os.path.join(path, file))
 		elif os.path.isdir(os.path.join(dir_path, file)):
 			shutil.rmtree(file)
